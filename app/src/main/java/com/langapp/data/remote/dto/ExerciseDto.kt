@@ -12,10 +12,17 @@ data class ExerciseDto(
     val opciones: List<String>,
     val puntos: Int,
     val orden: Int,
+    @SerializedName("respuesta_correcta") val respuestaCorrecta: String? = null,
 )
 
 fun ExerciseDto.toDomain() = Exercise(
-    id = id, lessonId = lessonId, tipo = tipo,
-    tipoDisplay = tipoDisplay, pregunta = pregunta,
-    opciones = opciones, puntos = puntos, orden = orden,
+    id = id,
+    lessonId = lessonId,
+    tipo = tipo,
+    tipoDisplay = tipoDisplay,
+    pregunta = pregunta,
+    opciones = opciones,
+    puntos = puntos,
+    orden = orden,
+    respuestaCorrecta = respuestaCorrecta,
 )

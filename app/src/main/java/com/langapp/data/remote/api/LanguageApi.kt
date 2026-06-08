@@ -6,7 +6,10 @@ import retrofit2.http.*
 
 interface LanguageApi {
     @GET("languages/")
-    suspend fun getLanguages(@Query("search") search: String? = null): Response<PaginatedDto<LanguageDto>>
+    suspend fun getLanguages(
+        @Query("search") search: String? = null,
+        @Query("page") page: Int? = null,
+    ): Response<PaginatedDto<LanguageDto>>
 
     @GET("languages/{id}/")
     suspend fun getLanguage(@Path("id") id: Int): Response<LanguageDto>

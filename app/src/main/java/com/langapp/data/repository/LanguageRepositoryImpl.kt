@@ -3,6 +3,7 @@ package com.langapp.data.repository
 import com.langapp.data.remote.api.LanguageApi
 import com.langapp.data.remote.dto.toDomain
 import com.langapp.domain.model.Language
+import com.langapp.domain.repository.LanguagePage
 import com.langapp.domain.repository.LanguageRepository
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -15,6 +16,17 @@ class LanguageRepositoryImpl @Inject constructor(
     override suspend fun getLanguages(search: String?): Result<List<Language>> = runCatching {
         val r = api.getLanguages(search)
         if (r.isSuccessful) r.body()!!.results.map { it.toDomain() } else error("Error ${r.code()}")
+    }
+
+    override suspend fun getLanguagesPaged(search: String?, page: Int): Result<LanguagePage> = runCatching {
+        val r = api.getLanguages(search, page)
+        if (r.isSuccessful) {
+            val body = r.body()!!
+            LanguagePage(
+                languages = body.results.map { it.toDomain() },
+                hasNext = body.next != null,
+            )
+        } else error("Error ${r.code()}")
     }
 
     override suspend fun getLanguage(id: Int): Result<Language> = runCatching {

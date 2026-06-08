@@ -9,4 +9,5 @@ data class Exercise(
     val opciones: List<String>,
     val puntos: Int,
     val orden: Int,
+    val respuestaCorrecta: String? = null,
 )

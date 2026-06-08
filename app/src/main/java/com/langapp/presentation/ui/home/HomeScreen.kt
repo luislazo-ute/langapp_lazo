@@ -61,6 +61,22 @@ fun HomeScreen(
                         items(state.languages, key = { it.id }) { lang ->
                             LanguageCard(lang) { onLanguageClick(lang.id) }
                         }
+                        if (state.hasNext) {
+                            item {
+                                Box(Modifier.fillMaxWidth().padding(8.dp), contentAlignment = Alignment.Center) {
+                                    if (state.isLoadingMore) {
+                                        CircularProgressIndicator(color = Accent, strokeWidth = 2.dp,
+                                            modifier = Modifier.size(28.dp))
+                                    } else {
+                                        OutlinedButton(
+                                            onClick = { viewModel.loadMore() },
+                                            colors = ButtonDefaults.outlinedButtonColors(contentColor = Accent),
+                                            border = androidx.compose.foundation.BorderStroke(1.dp, Accent),
+                                        ) { Text("Cargar más") }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
